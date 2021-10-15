@@ -4,15 +4,15 @@ use Cocur\Slugify\Slugify;
 
 class Image extends \Magento\Framework\App\Helper\AbstractHelper
 {
-	private $url;
+    private $url;
     private $directoryList;
 
-	public function __construct(
+    public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Catalog\Model\Product\Url $url,
         \Magento\Framework\App\Filesystem\DirectoryList $directoryList
     ) {
-    	$this->url = $url;
+        $this->url = $url;
         $this->directoryList = $directoryList;
         parent::__construct($context);
     }
@@ -56,7 +56,7 @@ class Image extends \Magento\Framework\App\Helper\AbstractHelper
         }
 
         $newFilename = $this->getFilename($product);
-        $newFilename = '/' . $newFilename[0] . '/' . $newFilename[1] . '/' . $newFilename;
+        $newFilename = '/nice/' . $newFilename[0] . '/' . $newFilename;
         $path = $this->directoryList->getPath('pub') . '/media/catalog/product';
 
         $source = $path . $file;
@@ -68,9 +68,13 @@ class Image extends \Magento\Framework\App\Helper\AbstractHelper
         }
 
         $newFilenameExt = $newFilename . '.' . $pathinfo['extension'];
+        if(strpos($pathinfo['filename'], '_1') !== false) {
+            $newFilenameExt = $newFilename . '_1.' . $pathinfo['extension'];
+        }
+
         $newFilenameWithPath = $path . $newFilenameExt;
 
-        $i = 1;
+        $i = 2;
         while (true) {
             if($i > 10) {
                 break;
