@@ -61,6 +61,10 @@ class Image extends \Magento\Framework\App\Helper\AbstractHelper
 
         $source = $path . $file;
 
+        if(!file_exists($source)) {
+            return $file;
+        }
+
         $pathinfo = pathinfo($file);
 
         if(!isset($pathinfo['extension']) || !$newFilename) {
